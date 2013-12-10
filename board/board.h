@@ -420,7 +420,7 @@
                                      PIN_MODE_INPUT(GPIOC_PIN5) |           \
                                      PIN_MODE_INPUT(GPIOC_PIN6) |           \
                                      PIN_MODE_INPUT(GPIOC_PIN7) |           \
-                                     PIN_MODE_INPUT(GPIOC_LED4) |          \
+                                     PIN_MODE_OUTPUT(GPIOC_LED4) |          \
                                      PIN_MODE_INPUT(GPIOC_LED3) |          \
                                      PIN_MODE_INPUT(GPIOC_PIN10) |          \
                                      PIN_MODE_INPUT(GPIOC_PIN11) |          \
@@ -484,7 +484,7 @@
                                      PIN_ODR_HIGH(GPIOC_PIN5) |             \
                                      PIN_ODR_HIGH(GPIOC_PIN6) |             \
                                      PIN_ODR_HIGH(GPIOC_PIN7) |             \
-                                     PIN_ODR_HIGH(GPIOC_LED4) |              \
+                                     PIN_ODR_LOW(GPIOC_LED4) |              \
                                      PIN_ODR_HIGH(GPIOC_LED3) |              \
                                      PIN_ODR_HIGH(GPIOC_PIN10) |            \
                                      PIN_ODR_HIGH(GPIOC_PIN11) |            \

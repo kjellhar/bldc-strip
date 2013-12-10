@@ -15,7 +15,11 @@ int main(void) {
 
 
   while (TRUE) {
-    chThdSleepMilliseconds(1000);
-    palTogglePort(GPIOB, GPIOB_LEDG);
+    chThdSleepMilliseconds(200);
+    // Use this with the strip
+    //palTogglePad(GPIOB, GPIOB_LEDG);
+
+    // Use this with the Discovery board
+    palTogglePad(GPIOC, GPIOC_LED4);
   }
 }
