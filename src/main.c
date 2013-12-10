@@ -2,6 +2,7 @@
 
 #include "ch.h"
 #include "hal.h"
+#include "blinky.h"
 
 
 
@@ -11,15 +12,10 @@ int main(void) {
   halInit();
   chSysInit();
 
-  //startSysCtrl();
-
+  startBlinkyBlue();
+  startBlinkyGreen();
 
   while (TRUE) {
-    chThdSleepMilliseconds(200);
-    // Use this with the strip
-    //palTogglePad(GPIOB, GPIOB_LEDG);
-
-    // Use this with the Discovery board
-    palTogglePad(GPIOC, GPIOC_LED4);
+    chThdSleepMilliseconds(1000);
   }
 }

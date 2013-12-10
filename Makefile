@@ -77,7 +77,8 @@ CSRC = $(PORTSRC) \
        $(HALSRC) \
        $(PLATFORMSRC) \
        $(BOARDSRC) \
-       src/main.c
+       src/main.c \
+       src/blinky.c
 
 # C++ sources that can be compiled in ARM or THUMB mode depending on the global
 # setting.
