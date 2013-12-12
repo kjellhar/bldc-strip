@@ -15,6 +15,7 @@ int main(void) {
   startBlinkyBlue();
   startBlinkyGreen();
 
+  // Just idle on the main loop
   while (TRUE) {
     chThdSleepMilliseconds(1000);
   }
