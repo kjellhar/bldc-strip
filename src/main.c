@@ -1,10 +1,8 @@
 
-
 #include "ch.h"
 #include "hal.h"
 #include "blinky.h"
-
-
+#include "uart_scp.h"
 
 int main(void) {
 
@@ -12,8 +10,10 @@ int main(void) {
   halInit();
   chSysInit();
 
-  startBlinkyBlue();
-  startBlinkyGreen();
+  //startBlinkyBlue();
+  //startBlinkyGreen();
+
+  uartSCPInit();
 
   // Just idle on the main loop
   while (TRUE) {

@@ -8,7 +8,6 @@
 #ifndef BLINKY_H_
 #define BLINKY_H_
 
-
 #define BLINKY_STACK_SIZE	128
 
 extern void startBlinkyBlue(void);
