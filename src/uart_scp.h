@@ -36,7 +36,7 @@
  * 	User0 = 0x00 :  OFF
  * 	User0 = 0xFF :  ON
  */
-#define SCP_LEDBLUE		0xF0
+#define SCP_LEDRED		0xF0
 #define SCP_LEDGREEN	0xF1
 
 void uartSCPInit(void);

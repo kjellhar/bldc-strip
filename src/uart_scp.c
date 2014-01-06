@@ -15,7 +15,7 @@ uint8_t txBuffer[SCP_PACKET_LENGTH];
 
 uint8_t crc8(uint8_t *data_in, uint8_t number_of_bytes_to_read) {
   uint8_t crc;
-  uint16_t loop_count;
+  uint8_t loop_count;
   uint8_t bit_counter;
   uint8_t data;
   uint8_t feedback_bit;
@@ -85,16 +85,23 @@ static void rxchar(UARTDriver *uartp, uint16_t c) {
 static void rxend(UARTDriver *uartp) {
   (void)uartp;
 
-  if (crc8(rxBuffer, SCP_PACKET_LENGTH - 1) == rxBuffer[7]) {
+  chSysLockFromIsr();
+
+  uint8_t crc = crc8(rxBuffer, SCP_PACKET_LENGTH - 1);
+
+
+  if (crc == rxBuffer[7]) {
     switch (rxBuffer[0]) {
 
-    case SCP_LEDBLUE:
+    case SCP_LEDRED:
       if (rxBuffer[1] == 0x00) {
-        palClearPad(GPIOC, GPIOC_LED4);
+        palClearPad(GPIOC, GPIOC_LED4);         //STM32F0Discovery
+        //palClearPad(GPIOB, GPIOB_LEDR);       //Strip v2
         txBuffer[0] = SCP_ACK;
       }
       else if (rxBuffer[1] == 0xFF) {
-        palSetPad(GPIOC, GPIOC_LED4);
+        palSetPad(GPIOC, GPIOC_LED4);           //STM32F0Discovery
+        //palSetPad(GPIOB, GPIOB_LEDR);         //Strip v2
         txBuffer[0] = SCP_ACK;
       }
       else {
@@ -104,11 +111,13 @@ static void rxend(UARTDriver *uartp) {
 
     case SCP_LEDGREEN:
       if (rxBuffer[1] == 0x00) {
-        palClearPad(GPIOC, GPIOC_LED3);
+        palClearPad(GPIOC, GPIOC_LED3);         //STM32F0Discovery
+        //palClearPad(GPIOB, GPIOB_LEDG);       //Strip v2
         txBuffer[0] = SCP_ACK;
       }
       else if (rxBuffer[1] == 0xFF) {
-        palSetPad(GPIOC, GPIOC_LED3);
+        palSetPad(GPIOC, GPIOC_LED3);           //STM32F0Discovery
+        //palSetPad(GPIOB, GPIOB_LEDG);         //Strip v2
         txBuffer[0] = SCP_ACK;
       }
       else {
@@ -120,16 +129,17 @@ static void rxend(UARTDriver *uartp) {
 
 
     txBuffer[7] = crc8(txBuffer, SCP_PACKET_LENGTH - 1);
-    uartStartSend(&UARTD1, SCP_PACKET_LENGTH, &txBuffer);
-    uartStartReceive(&UARTD1, SCP_PACKET_LENGTH, &rxBuffer);
+    uartStartSendI(&UARTD1, SCP_PACKET_LENGTH, txBuffer);
+    uartStartReceiveI(&UARTD1, SCP_PACKET_LENGTH, rxBuffer);
 
+    chSysUnlockFromIsr();
   }
 }
 
 /*
  * UART driver configuration structure.
  */
-static UARTConfig uart_cfg_1 = {txend1, txend2, rxend, rxchar, rxerr, 38400, 0,
+static UARTConfig uart_cfg_1 = {txend1, txend2, rxend, rxchar, rxerr, 9600, 0,
                                 USART_CR2_LINEN, 0};
 
 void uartSCPInit(void) {
@@ -142,6 +152,6 @@ void uartSCPInit(void) {
   /*
    * Initiate RX and wait for message
    */
-  uartStartReceive(&UARTD1, SCP_PACKET_LENGTH, &rxBuffer);
+  uartStartReceive(&UARTD1, SCP_PACKET_LENGTH, &rxBuffer[0]);
 
 }
