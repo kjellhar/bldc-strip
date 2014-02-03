@@ -37,7 +37,7 @@ def	crc8(data_in):
 	return crc
 
 
-str	=  [0x00,0x00,0x00,0x00,0x00,0x00,0x00]
+str	=  bytearray([0x00,0x00,0x00,0x00,0x00,0x00,0x00])
 
 if (len(sys.argv) == 3):
 	if (sys.argv[1] == "led1"):
@@ -61,5 +61,6 @@ else:
 str.append(crc8 (str))
 
 # Change the device when using this in other platforms than RaspberryPi
-ser = serial.Serial('/dev/ttyAMA0', 9600)
+# ser = serial.Serial('/dev/ttyAMA0', 9600)
+ser = serial.Serial('/dev/ttyUSB0', 9600)
 ser.write (str)
