@@ -143,15 +143,14 @@ static UARTConfig uart_cfg_1 = {txend1, txend2, rxend, rxchar, rxerr, 9600, 0,
                                 USART_CR2_LINEN, 0};
 
 void uartSCPInit(void) {
-
-  /*
-   * Activates the serial driver 1
-   */
-  uartStart(&UARTD1, &uart_cfg_1);
-
-  /*
-   * Initiate RX and wait for message
-   */
-  uartStartReceive(&UARTD1, SCP_PACKET_LENGTH, &rxBuffer[0]);
-
+	/*
+	 * * Activates the serial driver 1
+	 * */
+	palSetPadMode(GPIOB, GPIOB_USART_TX, PAL_MODE_ALTERNATE(0));
+	palSetPadMode(GPIOB, GPIOB_USART_RX, PAL_MODE_ALTERNATE(0));
+	uartStart(&UARTD1, &uart_cfg_1);
+	/*
+	 * * Initiate RX and wait for message
+	 * */
+	uartStartReceive(&UARTD1, SCP_PACKET_LENGTH, &rxBuffer[0]);
 }
